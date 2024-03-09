@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gray-100 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 position-fixed w-full z-10" style="-webkit-box-shadow: 0px 4px 8px -1px #000000; 
+<nav x-data="{ open: false }" class="bg-gray-100 {{ $theme == 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-light'}} border-b border-gray-100 position-fixed w-full z-10" style="-webkit-box-shadow: 0px 4px 8px -1px #000000; 
 box-shadow: 0px 4px 8px -1px #000000;">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto px-4 sm:px-6 lg:px-8">
@@ -7,23 +7,27 @@ box-shadow: 0px 4px 8px -1px #000000;">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 {{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-700'}}" />
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
-                    </x-nav-link>
+            </div>
+            <!-- Navigation Links -->
+            <div class="nav-link" style="width: 45%;">
+                <div class="hidden space-x-8 sm:flex items-center h-100">
+                    <ul class="flex h-100 gap-5 items-end w-full" style="justify-content: space-around">
+                        <li class="w-full" style="border-bottom: 4px solid blue;"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-house" style="font-size: 25px"></i></a></li>
+                        <li class="w-full"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-user-group"></i></a></li>
+                        <li class="w-full"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-house" style="font-size: 25px"></i></a></li>
+                    </ul>
                 </div>
             </div>
-
+            
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border-transparent text-sm leading-4 font-medium rounded-md gap-2 text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border-transparent text-sm leading-4 font-medium rounded-md gap-2 text-gray-500 {{ $theme == 'dark' ? 'text-gray-400 bg-gray-800 hover:text-gray-300' : 'text-gray-700 bg-gray-100'}} hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
                             <div>
                                 <img src="{{ Storage::url('avatar/' . Auth::user()->avatar) }}" width="40" class="img-fluid mr-2" alt="">
@@ -37,11 +41,18 @@ box-shadow: 0px 4px 8px -1px #000000;">
                     </x-slot>
                     
 
-                    <x-slot name="content" class="bg-dark">
+                    <x-slot name="content" class="{{ $theme == 'dark' ? 'bg-gray-800' : 'bg-gray-100'}}">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
+                        <form action="{{ route('create-update') }}" method="POST" class="mode_box">
+                            @csrf
+                            <input type="radio" name="theme" id="theme" value="{{ $theme == 'dark' ? 'light' : 'dark' }}" class="btn-check" onchange="this.form.submit()">
+                            <label for="theme" class="block w-full px-4 py-2 text-left text-sm leading-5 focus:outline-none transition duration-150 ease-in-out {{ $theme == 'dark' ? 'text-gray-800 hover:bg-gray-500 focus:bg-gray-800' : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100' }} cursor-pointer">
+                                <i class="fa-solid {{ $theme == 'dark' ? 'fa-moon' : 'fa-sun' }}"></i>
+                                <span>{{ $theme == 'dark' ? 'Dark theme' : 'Light theme' }}</span>
+                            </label>
+                        </form>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

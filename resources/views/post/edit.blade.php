@@ -1,23 +1,23 @@
 <x-app-layout>
     <div class="py-12">
         <h1>Edit Post</h1>
-        <div class="card mt-4 w-50 mx-auto p-2 pt-3 bg-slate-300">
+        <div class="card mt-4 w-50 mx-auto p-2 pt-3  {{ $theme == 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-800'}}">
             <form action="{{ route('post.update', $post->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label"><b>Title</b></label>
-                    <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="title" value="{{ $post->title }}">
+                    <x-text-input name="title" class="form-control" id="exampleFormControlInput1" placeholder="title" value="{{ $post->title }}"></x-text-input>
                     <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label"><b>Description</b></label>
-                    <textarea class="form-control" name="description" id="description" rows="3" placeholder="Description">{{ $post->description }}</textarea>
+                    <textarea class="{{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} w-full" name="description" id="description" rows="3" placeholder="Description">{{ $post->description }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
                 <div class="mb-3">
                   <label for="category" class="form-label"><b>Category</b></label>
-                  <select class="form-select" id="category" name="category" aria-label="Default select example">
+                  <select class="w-full {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}}" id="category" name="category" aria-label="Default select example">
                     @foreach ($category as $value)
                       <option value="{{$value->id}}" {{ $post->category_id == $value->id ? 'selected' : '' }}>{{$value->name}}</option>
                     @endforeach

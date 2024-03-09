@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -105,13 +106,20 @@ class PostController extends Controller
         $post->category_id = $validatedData['category'];
     
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('post-images');
-            $post->image = $imagePath;
+            if ($post->image && Storage::exists('public/post-images/' . $post->image)) {
+                Storage::delete('public/post-images/' . $post->image);
+            }
+    
+            // Store the new image
+            $image = $request->file('image');
+            $imageName = time() . '-' . $image->getClientOriginalName();
+            $image->storeAs('public/post-images', $imageName);
+            $post->image = $imageName;
         }
     
         $post->update();
 
-        return redirect()->to(route('post.index'));
+        return redirect()->route('post.index');
     }
 
     /**
@@ -124,6 +132,10 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        if (Gate::denies('delete-post', $post)) {
+            abort(403, 'Unauthorized action.');
+        }    
+
         // Delete the associated image from storage
         if ($post->image) {
             Storage::delete('post-images/' . $post->image);
@@ -131,6 +143,8 @@ class PostController extends Controller
     
         // Delete the post
         $post->delete();
+
+        return redirect()->route('post.index')->with('success', 'Post deleted successfully.');
     
     }
 }

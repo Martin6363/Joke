@@ -22,12 +22,12 @@
                 <x-input-label :value="__('Gender')" />
                 <div class="flex items-center gap-2 form-check text-lime-50 text-sm mt-1">
                     <input class="form-check-input  " type="radio" name="gender" id="male" value="male">
-                    <label class="form-check-label" for="male">
+                    <label class="form-check-label  {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-900'}}" for="male">
                         Male
                     </label>
                     <div class="text-lime-50 text-sm">
                         <input class="form-check-input" type="radio" name="gender" id="female" value="female" checked>
-                        <label class="form-check-label" for="female">
+                        <label class="form-check-label {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-900'}}" for="female">
                             Female
                         </label>
                         <x-input-error :messages="$errors->get('gender')" class="mt-2" />
@@ -36,7 +36,7 @@
             </div>
             <div class="d-flex flex-col items-end">
                 <x-input-label :value="__('Date of birth')" />
-                <input type="date" class="block mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300" name="dateOfBirth" required autocomplete="dob">
+                <input type="date" class="block mt-1 border-gray-300 dark:border-gray-700 {{ $theme == 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-200 text-gray-900'}}" name="dateOfBirth" required autocomplete="dob">
                 <x-input-error :messages="$errors->get('dateOfBirth')" class="mt-2" />
             </div>
         </div>

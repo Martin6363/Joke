@@ -1,22 +1,27 @@
 <x-app-layout>
     <div class="py-12">
         <h1>Create Post</h1>
-        <div class="card mt-4 w-50 mx-auto p-2 pt-3 bg-slate-300">
+        <div class="card mt-4 w-50 mx-auto p-2 pt-3 {{ $theme == 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-800'}}">
             <form action="{{  route('post.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label"><b>Title</b></label>
-                    <input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="title">
+                    <x-text-input name="title" class="form-control" id="exampleFormControlInput1" placeholder="title"></x-text-input>
                     <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label"><b>Description</b></label>
-                    <textarea class="form-control" name="description" id="description" rows="3" placeholder="Description"></textarea>
+                    <textarea class="w-full {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm"
+                      name="description" 
+                      id="description" 
+                      rows="3" 
+                      placeholder="Description"
+                    ></textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
                 <div class="mb-3">
                   <label for="category" class="form-label"><b>Category</b></label>
-                  <select class="form-select" id="category" name="category" aria-label="Default select example">
+                  <select class="form-select {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm" id="category" name="category" aria-label="Default select example">
                     @foreach ($category as $value)
                       <option value="{{$value->id}}">{{$value->name}}</option>
                     @endforeach
@@ -24,14 +29,14 @@
                   <x-input-error :messages="$errors->get('category')" class="mt-2" />
                 </div>
                 <label class="form-label mt-3"><b>Image</b></label>
-                <div class="card-input-image" id="card_input_image">
+                <div class="card-input-image {{ $theme == 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}}" id="card_input_image">
                     <input type="file" id="input_image" name="image" class="input-image" accept=".png, .jpg, .jpeg" onchange="onchange_value('input_image', 'card_input_image')"/>
                     <label for="input_image" class="label-upload-image">
                       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m1 5h-2v4H7v2h4v4h2v-4h4v-2h-4V7Z"/>
                       </svg>
                       Upload File
-                      <span class="text-muted" style="opacity: 0.5">png jpg jpeg</span>
+                      <span class="{{ $theme == 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}}" style="opacity: 0.5">png jpg jpeg</span>
                     </label>
                     <button type="button" class="btn-delete" onclick="delete_value('input_image', 'card_input_image')">
                       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256">

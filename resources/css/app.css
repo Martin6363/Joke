@@ -27,7 +27,6 @@ body {
 
 .post_image_box {
     max-width: 100%;
-    min-height: 250px;
 }
 
 .post_image_box img {
@@ -246,7 +245,23 @@ body {
   }
 
 
-  /* DASHBOARD Page */
+/* Navigation blade  */
+
+.nav-link li {
+  height: 100%;
+}
+
+.nav-link li a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+  /* HOME Page */
   .main_left_nav,
   .main_right_aside {
       position: fixed;
@@ -254,8 +269,6 @@ body {
       height: calc(100vh - 70px);
       overflow-y: auto;
       padding: 1.5rem;
-      background-color: #1F2937 !important;
-      color: #fff;
       border-radius: 20px 0 0 20px;
       z-index: 0;
   }
@@ -286,23 +299,19 @@ body {
     overflow-y: auto;
   }
 
-/* width */
 .comments_user::-webkit-scrollbar {
   width: 8px;
 }
 
-/* Track */
 .comments_user::-webkit-scrollbar-track {
   border-radius: 10px;
 }
  
-/* Handle */
 .comments_user::-webkit-scrollbar-thumb {
   background: rgb(146, 146, 146); 
   border-radius: 10px;
 }
 
-/* Handle on hover */
 .comments_user::-webkit-scrollbar-thumb:hover {
   background: #4a4a4a; 
 }
@@ -311,6 +320,41 @@ body {
   background-color: #2d9da9;
 }
   
+.comment_content_box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 5px;
+}
+
+.comment_content_box .comment_avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.comment_content_box textarea {
+  width: 100%;
+  resize: none;
+  background-color: #F0F2F5;
+  border: none;
+} 
+
+.comment_content_box textarea:focus {
+  border: none !important;
+  outline: none !important;
+}
+
+.comment_content_box .send_comm_btn {
+  position: absolute !important;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: transparent;
+
+}
+
 
 
 /* Profile page */
@@ -338,7 +382,6 @@ body {
   width: 100%; 
   height: 100%; 
   border-radius: 50%; 
-  background: #333;
 }
 
 .crop_image {
@@ -384,7 +427,6 @@ body {
   height: 255px;
   width: 100%;
   border-radius: 8px;
-  background-color: #f2f2f2;
   position: relative;
   margin: 0 auto 12px auto;;
 }
@@ -503,3 +545,42 @@ body {
   line-height: 1em;
   height: auto;
 }
+
+
+/* Profile View Page */
+
+.user_result_text {
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.user_result_text small {
+  color: #a5a5a5;
+  font-size: 12px;
+}
+
+.user_result_text > div {
+  position: relative;
+  margin: 0;
+}
+.split-parent {
+  overflow: hidden;
+}
+.split-child {
+  display: inline-block;
+}
+.text-heading {
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
