@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #111827; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0b101b; 
+}
+
 body {
     overflow-x: hidden !important;
 }
@@ -14,7 +38,8 @@ body {
 }
 
 .user_logo_post {
-    width: 50px !important;
+    width: 50px;
+    min-width: 50px !important;
     height: 50px !important;
     border-radius: 50%;
 }
@@ -27,10 +52,17 @@ body {
 
 .post_image_box {
     max-width: 100%;
+    line-height: 1.5556;
 }
 
 .post_image_box img {
-    width: 100%;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover;
+    object-position: center;
 }
 
 
@@ -287,7 +319,25 @@ body {
       right: 0;
       width: 20%; 
   }
+
+  .main_right_aside::-webkit-scrollbar {
+    width: 6px;
+  }
   
+  .main_right_aside::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+   
+  .main_right_aside::-webkit-scrollbar-thumb {
+    background: #818181; 
+    border-radius: 10px;
+  }
+  
+  .main_right_aside::-webkit-scrollbar-thumb:hover {
+    background: #a6a6a6; 
+  }
+  
+
   .content-middle {
       width: 100% !important;
       margin: 0 auto;
@@ -358,6 +408,22 @@ body {
 
 
 /* Profile page */
+
+.video-background {
+  object-fit: cover;
+  background-position: center;
+}
+
+
+.user-info {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#btn-ripple {
+  margin-top: 20px;
+}
+
 
 .avatar_profile {
   width: 150px;
@@ -584,3 +650,22 @@ body {
   justify-content: space-around;
 }
 
+.avatar-container {
+  animation: animate-pulse 3s linear both;
+}
+
+@keyframes animate-pulse{
+  0%{
+      box-shadow: 0 0 0 0 rgba(249, 238, 235, 0.7),  0 0 0 0 rgba(239, 232, 230, 0.7);
+  }
+  40%{
+      box-shadow: 0 0 0 50px rgba(255,109,74,0.0),  0 0 0 0 rgba(230, 226, 225, 0.7);
+  }
+  80%{
+      box-shadow: 0 0 0 50px rgba(255,109,74,0.0),  0 0 0 30px rgba(255,109,74,0);
+  }
+  100%{
+      box-shadow: 0 0 0 0 rgba(255,109,74,0.0),  0 0 0 30px rgba(255,109,74,0);
+  }
+  
+}

@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gray-100 {{ $theme == 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-light'}} border-b border-gray-100 position-fixed w-full z-10" style="-webkit-box-shadow: 0px 4px 8px -1px #000000; 
+<nav x-data="{ open: false }" class="{{ $theme == 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-100'}} border-b border-gray-100 position-fixed w-full z-10" style="-webkit-box-shadow: 0px 4px 8px -1px #000000; 
 box-shadow: 0px 4px 8px -1px #000000;">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +18,6 @@ box-shadow: 0px 4px 8px -1px #000000;">
                     <ul class="flex h-100 gap-5 items-end w-full" style="justify-content: space-around">
                         <li class="w-full" style="border-bottom: 4px solid blue;"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-house" style="font-size: 25px"></i></a></li>
                         <li class="w-full"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-user-group"></i></a></li>
-                        <li class="w-full"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-house" style="font-size: 25px"></i></a></li>
                     </ul>
                 </div>
             </div>

@@ -25,7 +25,10 @@
                               </h2>
                               <div id="flush-collapseOne" class="accordion-collapse visible collapse {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}}" style="border-radius: 5px" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 @foreach ($categories as $category)
-                                    <a href="{{ route('post.create') }}" class="accordion-body btn w-full text-left {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400 p-2">{{ $category->name }}</a>
+                                    <a href="{{ route('post.create') }}" class="accordion-body btn w-full text-left flex justify-between {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400 p-2">
+                                        {{ $category->name }}
+                                        <small class="">{{ $category->posts_count }}</small>
+                                    </a>
                                 @endforeach
                               </div>
                             </div>
@@ -33,18 +36,75 @@
                     </div>
                 </nav>
                 <div class="p-6 {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-900'}} content-middle">
-                    @foreach ($usersWithPosts as $key => $user)
-                        @foreach ($user->posts as $post)
-                            @if ($post->user_id >= 1)
-                                <x-user-and-post-section :user="$user" :post="$post" :theme="$theme" />
-                            @endif
+                    <div id="data-wrapper">
+                        @foreach ($usersWithPosts as $key => $user)
+                            @foreach ($user->posts as $post)
+                                @if ($post->user_id >= 1)
+                                    <x-user-and-post-section :user="$user" :post="$post" :theme="$theme" />
+                                @endif
+                            @endforeach
                         @endforeach
-                    @endforeach
+                    </div>
                 </div>
                 <aside class="{{ $theme == 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-light text-gray-800'}} main_right_aside" id="aside">
-                    ASIDE CONTENT
+                    <h2 class="text-center mb-3" style="font-family: Poppins, sans-serif">Active Users</h2>
+                    @foreach ($activeUsers as $key => $user)
+                        <div class="card mb-2 {{ $theme == 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-gray-200 text-gray-800'}}">
+                            <div class="card-body flex items-center gap-2">
+                                <a href="{{ route('profile.view', [$user->id]) }}" class="{{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-800'}}">
+                                    <img src="{{ Storage::url('avatar/' . $user->avatar) }}" class="card-img-top user_logo_post" alt="">
+                                </a>
+                                <small><b>{{ $user->name }}</b></small>
+                            </div>
+                        </div>
+                    @endforeach
                 </aside>
             </div>
         </div>
     </div>
+    <div class="loader text-center {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-800' }}" style="display: none">
+        <div class="flex justify-center">
+            <div class="spinner-border {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-800' }}" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        var ENDPOINT = "{{ route('home') }}";
+        var page = 1;
+        var loading = false;
+    
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20) && !loading) {
+                page++;
+                loadMore(page);
+            }
+        });
+    
+        function loadMore(page) {
+            loading = true; 
+            $.ajax({
+                url: ENDPOINT + "?page=" + page,
+                datatype: "json",
+                type: "GET",
+                beforeSend: function () {
+                    $(".loader").show();
+                },
+                success: function(response) {
+                    if (response.html == '') {
+                        $('.loader').html("End");
+                        return;
+                    }
+                    $('.loader').hide();
+                    $("#data-wrapper").append(response.html);
+                    loading = false;
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            })
+        }
+    </script>
+    
 </x-app-layout>

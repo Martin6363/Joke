@@ -3,18 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\View;
 class HomeController extends Controller
 {
     public function index (Request $request) {
-        $usersWithPosts = User::with('posts')->orderBy('id', 'desc')->get();
-        $categories = Category::all();
-        
+        $usersWithPosts = User::with(['posts' => function ($query) {
+            $query->where('published', 1);
+        }])->orderBy('id', 'desc')->paginate(2);
+     
+        $activeUsers = User::orderBy('id', 'desc')->get();
+
+        if ($request->ajax()) {
+            $categories = Category::all();
+            $theme = $request->cookie('theme');
+            $html = '';
+            foreach ($usersWithPosts as $user) {
+                foreach ($user->posts as $post) {
+                    if ($post->user_id >= 1) {
+                        $html .= view('components.user-and-post-section', compact('user', 'post', 'theme'))->render();
+                    }
+                }
+            }
+            return response()->json(['html' => $html]);
+        }
+
+        $categories = Category::withCount('posts')->get();
         $theme = $request->cookie('theme');
         return view('home', compact(
             'usersWithPosts',
+            'activeUsers',
             'categories',
             'theme'
         ));

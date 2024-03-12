@@ -24,6 +24,15 @@
                   </select>
                   <x-input-error :messages="$errors->get('category')" class="mt-2" />
                 </div>
+                <div class="mb-3">
+                  <label for="availability" class="form-label"><b>Availability</b></label>
+                  <select class="form-select w-50 form-select-sm {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm" id="availability" name="published" aria-label="Default select example">
+                    @foreach($postPublished as $key => $value)
+                      <option value="{{ $key }}" {{ $post->published == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
+                  </select>
+                  <x-input-error :messages="$errors->get('published')" class="mt-2" />
+                </div>
                 <label class="form-label mt-3"><b>Image</b></label>
                 <div class="card-input-image" id="card_input_image">
                     <input type="file" id="input_image" name="image" class="input-image" accept=".png, .jpg, .jpeg" onchange="onchange_value('input_image', 'card_input_image')"/>

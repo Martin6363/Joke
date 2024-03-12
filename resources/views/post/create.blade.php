@@ -11,7 +11,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label"><b>Description</b></label>
-                    <textarea class="w-full {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm"
+                    <textarea wire:model="description" class="w-full {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm"
                       name="description" 
                       id="description" 
                       rows="3" 
@@ -24,6 +24,15 @@
                   <select class="form-select {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm" id="category" name="category" aria-label="Default select example">
                     @foreach ($category as $value)
                       <option value="{{$value->id}}">{{$value->name}}</option>
+                    @endforeach
+                  </select>
+                  <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                </div>
+                <div class="mb-3">
+                  <label for="availability" class="form-label"><b>Availability</b></label>
+                  <select class="form-select w-50 {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}} rounded-md shadow-sm" id="availability" name="published" aria-label="Default select example">
+                    @foreach($postPublished as $key => $value)
+                      <option value="{{ $key }}">{{ $value }}</option>
                     @endforeach
                   </select>
                   <x-input-error :messages="$errors->get('category')" class="mt-2" />

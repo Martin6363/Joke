@@ -2,7 +2,7 @@
     <div class="card {{ $theme == 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-light text-gray-700'}}">
         <div class="card-header d-flex justify-between">
             <div class="user_post_data_block">
-                <a href="{{ route('profile.view', [$user->id]) }}">
+                <a href="{{ route('profile.view', [$user->id]) }}" class="{{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-800'}}">
                     <img src="{{ Storage::url('avatar/' . $user->avatar) }}" class="card-img-top user_logo_post" alt="">
                 </a>
                 <div class="d-flex post_user_data_box">
@@ -34,11 +34,11 @@
         <div class="card-body">
             <h5 class="card-title"><b>{{ $post->title }}</b></h5>
             @if ($post->image && Storage::exists('public/post-images/' . $post->image))
-                <img src="{{ Storage::url('post-images/'.$post->image) }}" alt="Post Image">
+                <div class="post_image_box">
+                    <img class="post_image" src="{{ Storage::url('post-images/'.$post->image) }}" alt="Post Image">
+                </div>
             @endif
             <p class="card-text">{{ $post->description }}</p>
-            <div class="post_image_box">
-            </div>
         </div>
         <div class="card-footer">
             <div class="card_footer_container d-flex justify-between" style="font-size: 20px">

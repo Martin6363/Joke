@@ -37,8 +37,14 @@ class PostController extends Controller
     public function create()
     {
         $category = Category::all();
+
+        $postPublished = [
+            1 => 'Public',
+            0 => 'Private'
+        ];
         return view('post.create', compact(
-            'category'
+            'category',
+            'postPublished'
         ));
     }
 
@@ -53,7 +59,7 @@ class PostController extends Controller
         $data = $request->validated();
         $data['user_id'] = Auth::user()->id;
         $data['category_id'] = $request->category;
-
+        $data['published'] = $request->published;
         $image = $request->file('image');
         $imageName = time() . '-' . $image->getClientOriginalName();
         $image->storeAs('public/post-images', $imageName);
@@ -84,9 +90,15 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $category = Category::all();
+        $postPublished = [
+            1 => 'Public',
+            0 => 'Private'
+        ];
+
         return view('post.edit', compact(
             'post', 
-            'category'
+            'category',
+            'postPublished'
         ));
     }
 
@@ -104,7 +116,8 @@ class PostController extends Controller
         $post->title = $validatedData['title'];
         $post->description = $validatedData['description'];
         $post->category_id = $validatedData['category'];
-    
+        $post->published = $validatedData['published'];
+
         if ($request->hasFile('image')) {
             if ($post->image && Storage::exists('public/post-images/' . $post->image)) {
                 Storage::delete('public/post-images/' . $post->image);

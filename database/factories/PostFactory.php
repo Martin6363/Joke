@@ -25,12 +25,18 @@ class PostFactory extends Factory
         $userId = User::inRandomOrder()->first();
         $companyId = Category::inRandomOrder()->first();
 
+        $fakerFileName = $this->faker->image(
+            storage_path("app/public/post-images/"),
+            800,
+            600
+        );
+
         return [
             "title"=> fake()->title(),
             "description" => fake()->paragraph(),
             "category_id"=> $companyId ? $companyId->id : '',
             "user_id" => $userId ? $userId->id : '',
-            "image" => fake()->imageUrl(640, 480, 'animals', true),
+            'image' => basename($fakerFileName),
             "published" => fake()->boolean(),
         ];
     }
