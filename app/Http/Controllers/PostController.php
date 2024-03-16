@@ -24,7 +24,7 @@ class PostController extends Controller
         $userId = Auth::id();
 
         $posts = Post::with('category')
-        ->where('user_id', $userId)->orderBy('id', 'desc')->get();
+        ->where('user_id', $userId)->where('published', 0)->orderBy('id', 'desc')->get();
         return view('post.index', compact('posts'));
     }
     
@@ -67,7 +67,7 @@ class PostController extends Controller
         $data['image'] = $imageName;
 
         Post::create($data);
-        return redirect()->to(route('post.index'));
+        return redirect()->to(route('home'));
     }
 
     /**

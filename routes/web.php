@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ViewProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchPostController;
 use App\Http\Controllers\ThemeController;
 
 /*
@@ -29,7 +30,10 @@ Route::post('/cookie/create/update', [HomeController::class, 'createAndUpdate'])
 Route::middleware('auth')->group(function () {
     ##post routes
     Route::resource('post', PostController::class);
-
+    ## Search Routes
+    Route::get('/search', [SearchPostController::class, 'getAutocomplete'])->name('search');
+    Route::get('/search/{name}', [SearchPostController::class, 'searchResult'])->name('search.result');
+    Route::get('/search_posts', [SearchPostController::class, 'searchPosts'])->name('search.posts');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

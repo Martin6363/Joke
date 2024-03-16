@@ -9,21 +9,19 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background-color: #f2f2f2;
-  border-radius: 10px;
 }
  
 ::-webkit-scrollbar-thumb {
-  background: #111827; 
-  border-radius: 10px;
+  background: #26375a; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0b101b; 
+  background: #1f2b46; 
 }
 
 body {
@@ -572,6 +570,7 @@ body {
 
 .card-box {
   max-width: 100%;
+  min-width: 30em;
   border: 1px solid #ddd;
   padding: 20px;
   box-shadow: 0px 0px 10px 0px #c5c5c5;
@@ -668,4 +667,60 @@ body {
       box-shadow: 0 0 0 0 rgba(255,109,74,0.0),  0 0 0 30px rgba(255,109,74,0);
   }
   
+}
+
+
+/* Search bar Component */
+
+.searched_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 100%;
+  bottom: -110%;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,0.75);
+  border-radius: 5px !important;
+  padding: 5px;
+  height: max-content;
+  transition: 0.2s ease;
+  animation: searchList 0.2s both;
+  display: none;
+}
+
+.scrollable {
+  height: max-content;
+  overflow-y: auto;
+}
+
+.searched_list li {
+  width: 100%;
+  list-style: none;
+}
+
+.searched_list li:hover {
+  background-color: #838383;
+}
+
+.searched_list li .searched_href {
+  width: 100% !important;
+  color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 3px;
+}
+
+
+@keyframes searchList {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

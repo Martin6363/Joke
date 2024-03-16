@@ -11,7 +11,12 @@
                     <div class="mx-auto m-2 p-2 avatar-container" data-bs-toggle="modal" data-bs-target="#bigAvatar" style="width: 150px; height: 150px; border: 5px solid #b1b1b1; border-radius: 50%; position: relative; z-index: 1; cursor: pointer;">
                         <img src="{{ Storage::url('avatar/' . $user->avatar) }}" class="card-img-top w-full h-full" style="border-radius: 50%;" alt="User Avatar">
                     </div>
-                    <h5 class="card-title text-center my-3 font-bold" style="font-size: 25px; color: white; z-index: 1; position: relative;">{{ $user->name }}</h5>
+                    <h5 class="card-title text-center my-3 font-bold" style="font-size: 25px; color: white; z-index: 1; position: relative;">
+                        {{ $user->name }}
+                        @if (Auth::user()->id == $user->id)
+                            <a href="{{ route('profile.update') }}" class="text-gray-200 ml-3 p-2 rounded" style="background: rgb(255,255,255,0.3)"><i class="fa-solid fa-pencil"></i></a>
+                        @endif
+                    </h5>
                     <div class="card-body user-info" style="z-index: 1; position: relative; color: white;">
                         <div class="text-heading mx-auto">
                             <p class="user_result_text">
@@ -26,8 +31,10 @@
                                 <span class="stat-number" style="font-family: Poppins, sans-serif;">1500</span>
                                 <small class="text-lead">Likes</small>
                             </p>
-                        </div>                          
-                        <button class="btn btn-primary w-20 mx-auto" id="btn-ripple" style="position: relative; z-index: 1;">Follow</button>
+                        </div>
+                        @if (Auth::user()->id !== $user->id)                        
+                            <button class="btn btn-primary w-20 mx-auto" id="btn-ripple" style="position: relative; z-index: 1;">Follow</button>
+                        @endif
                     </div>
                 </div>                
             </div>
@@ -38,7 +45,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"><b>Create Your Post</b></h5>
                                 <a href="{{ route('post.create') }}" class="btn w-full {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-800'}}">Create <i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="{{ route('post.index') }}" class="btn bg-transparent w-full mt-1 {{ $theme == 'dark' ? 'text-gray-300' : 'text-gray-800'}}">View Posts <i class="fa-solid fa-eye"></i></a>
+                                <a href="{{ route('post.index') }}" class="btn bg-transparent w-full mt-1 {{ $theme == 'dark' ? 'text-gray-300' : 'text-gray-800'}}">Unpublished Posts <i class="fa-solid fa-eye"></i></a>
                             </div>
                         </div>
                     </div>

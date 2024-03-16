@@ -14,16 +14,16 @@ class HomeController extends Controller
             $query->where('published', 1);
         }])->orderBy('id', 'desc')->paginate(2);
      
-        $activeUsers = User::orderBy('id', 'desc')->get();
+        $activeUsers = User::whereHas('posts', function ($query) {
+            $query->where('published', 1);
+        })->orderBy('id', 'desc')->get();
 
         if ($request->ajax()) {
-            $categories = Category::all();
-            $theme = $request->cookie('theme');
             $html = '';
             foreach ($usersWithPosts as $user) {
                 foreach ($user->posts as $post) {
                     if ($post->user_id >= 1) {
-                        $html .= view('components.user-and-post-section', compact('user', 'post', 'theme'))->render();
+                        $html .= view('components.user-and-post-section', compact('user', 'post'))->render();
                     }
                 }
             }

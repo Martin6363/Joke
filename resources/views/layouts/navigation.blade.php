@@ -10,6 +10,7 @@ box-shadow: 0px 4px 8px -1px #000000;">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 {{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-700'}}" />
                     </a>
                 </div>
+                <x-search-bar></x-search-bar>
 
             </div>
             <!-- Navigation Links -->
