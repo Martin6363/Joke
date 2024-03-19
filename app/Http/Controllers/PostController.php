@@ -141,23 +141,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function delete(Request $request, Post $post)
     {
-        $post = Post::findOrFail($id);
-
-        if (Gate::denies('delete-post', $post)) {
-            abort(403, 'Unauthorized action.');
-        }    
-
-        // Delete the associated image from storage
-        if ($post->image) {
-            Storage::delete('post-images/' . $post->image);
+        if ($request->user()->can('delete', $post)) {
+            if ($post->image) {
+                Storage::delete('post-images/' . $post->image);
+            }
+            $post->delete();
+            return response()->json(['message' => 'Post deleted successfully'], 200);
         }
-    
-        // Delete the post
-        $post->delete();
-
-        return redirect()->route('post.index')->with('success', 'Post deleted successfully.');
-    
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }

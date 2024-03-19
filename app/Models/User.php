@@ -13,11 +13,6 @@ class User extends Authenticatable //implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function posts(): HasMany {
-        return $this->hasMany(Post::class, 'user_id', 'id');
-    }
-
-
     const GENDER = [
         'Male',
         'Female'
@@ -39,6 +34,10 @@ class User extends Authenticatable //implements MustVerifyEmail
         'avatar',
         'nickname'
     ];
+
+    public function posts(): HasMany {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

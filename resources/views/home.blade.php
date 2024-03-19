@@ -40,10 +40,10 @@
                 </nav>
                 <div class="p-6 {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-900'}} content-middle">
                     <div id="data-wrapper">
-                        @foreach ($usersWithPosts as $key => $user)
+                        @foreach ($usersWithPosts as $key => $user)      
                             @foreach ($user->posts as $post)
                                 @if ($post->user_id >= 1)
-                                    <x-user-and-post-section :user="$user" :post="$post" :theme="$theme" />
+                                    <x-user-and-post-section :user="$user" :post="$post" :theme="$theme" />                        
                                 @endif
                             @endforeach
                         @endforeach
@@ -77,6 +77,11 @@
         var ENDPOINT = "{{ route('home') }}";
         var page = 1;
         var loading = false;
+        
+        $(document).ready(function() {
+            page++
+            loadMore(page);
+        });
     
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20) && !loading) {
@@ -110,7 +115,7 @@
             })
         }
     </script>
-  </div>
+    </div>
 </body>
 </html>
 

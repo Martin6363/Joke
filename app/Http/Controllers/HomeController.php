@@ -13,7 +13,7 @@ class HomeController extends Controller
         $usersWithPosts = User::with(['posts' => function ($query) {
             $query->where('published', 1);
         }])->orderBy('id', 'desc')->paginate(2);
-     
+
         $activeUsers = User::whereHas('posts', function ($query) {
             $query->where('published', 1);
         })->orderBy('id', 'desc')->get();

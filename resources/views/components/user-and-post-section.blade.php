@@ -21,9 +21,9 @@
                                 href="{{route('post.edit', $post->id)}}">
                                 Edit <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a class="flex justify-between {{ $theme == 'dark' ? 'text-gray-800 hover:bg-gray-500 focus:bg-gray-800' : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100' }} px-4 py-2 text-left text-sm leading-5 focus:outline-none transition duration-150 ease-in-out">
+                            <button type="button" class="w-full flex justify-between {{ $theme == 'dark' ? 'text-gray-800 hover:bg-gray-500 focus:bg-gray-800' : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100' }} px-4 py-2 text-left text-sm leading-5 focus:outline-none transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Delete <i class="fa-solid fa-trash"></i>
-                            </a>
+                            </button>
                         @else
                             <span class="m-2 text-muted">No Info</span>
                         @endif
@@ -77,5 +77,45 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content {{ $theme == 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-800' }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Are you sure you want to delete the post? <br> <small>{{ $post->title }}</small></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('#confirmDelete').click(function() {
+            $.ajax({
+                url: '{{ route("post.delete", $post->id) }}',
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $('#exampleModal').modal('hide');
+                    $('.card').remove();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

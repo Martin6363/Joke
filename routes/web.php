@@ -30,6 +30,7 @@ Route::post('/cookie/create/update', [HomeController::class, 'createAndUpdate'])
 Route::middleware('auth')->group(function () {
     ##post routes
     Route::resource('post', PostController::class);
+    Route::delete('/post/{post}', [PostController::class, 'delete'])->name('post.delete');
     ## Search Routes
     Route::get('/search', [SearchPostController::class, 'getAutocomplete'])->name('search');
     Route::get('/search/{name}', [SearchPostController::class, 'searchResult'])->name('search.result');

@@ -91,6 +91,7 @@
         //         }
         //     });
         // });
+        gsap.config({trialWarn: false});
 
         const childSplit = new SplitText(".user_result_text", {
             type: "lines",
@@ -102,7 +103,6 @@
             linesClass: "split-parent"
         });
 
-        gsap.config({trialWarn: false});
         gsap.from(childSplit.lines, {
             duration: 1.5,
             yPercent: 100,
