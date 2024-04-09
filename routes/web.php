@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryFilterController;
+use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ViewProfileController;
@@ -8,34 +10,30 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SearchPostController;
 use App\Http\Controllers\ThemeController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
+Route::match(['get', 'post'], '/home', [HomeController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('home');
 Route::post('/cookie/create/update', [HomeController::class, 'createAndUpdate'])->name('create-update');
 
 
 Route::middleware('auth')->group(function () {
-    ##post routes
+    ## category routes
+    Route::get('home/category/{category?}', [CategoryFilterController::class, 'filter'])->name('category.filter');
+    ## post routes
     Route::resource('post', PostController::class);
     Route::delete('/post/{post}', [PostController::class, 'delete'])->name('post.delete');
     ## Search Routes
     Route::get('/search', [SearchPostController::class, 'getAutocomplete'])->name('search');
     Route::get('/search/{name}', [SearchPostController::class, 'searchResult'])->name('search.result');
     Route::get('/search_posts', [SearchPostController::class, 'searchPosts'])->name('search.posts');
-
+    ## Like Routes
+    Route::post('posts/{post}/like', [PostLikeController::class, 'like'])->name('post.like');
+    Route::delete('posts/{post}/unlike', [PostLikeController::class, 'unlike'])->name('post.unlike');
+    ## Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile', [ProfileController::class, 'updateAvatar'])->name('profile.update.avatar');

@@ -52,7 +52,7 @@
                     <img src="{{ Storage::url('post-images/'.$post->image) }}" id="img_preview" class="image-preview" alt="Post Image" />
                   </div>
                 <div class="mt-3 float-end">
-                    <a href="{{ Route("home") }}" class="btn btn-danger inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-gray-900">
+                    <a wire:navigate href="{{ Route("home") }}" class="btn btn-danger inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-gray-900">
                       <i class="fa-solid fa-arrow-left mr-2"></i> Back
                     </a>
                     <x-primary-button type="submit" class="bg-success">Update</x-primary-button>

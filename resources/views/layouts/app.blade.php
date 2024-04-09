@@ -22,6 +22,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
         <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/SplitText3.min.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 {{ $theme == 'dark' ? 'bg-gray-900' : 'bg-gray-200'}}">
@@ -41,6 +42,7 @@
                 {{ $slot }}
             </main>
         </div>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
             gsap.config({
@@ -49,6 +51,8 @@
                 nullTargetWarn: false,
                 trialWarn: false,
             });
-        </script>
+            </script>
+            {{-- <script src="{{ asset('js/search.js') }}"></script> --}}
+            @livewireScripts
     </body>
 </html>

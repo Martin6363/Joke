@@ -144,13 +144,13 @@ class PostController extends Controller
 
     public function delete(Request $request, Post $post)
     {
-        if ($request->user()->can('delete', $post)) {
+        if ($request->user()->id == $post->user_id) {
             if ($post->image) {
-                Storage::delete('post-images/' . $post->image);
+                Storage::disk('public')->delete('post-images/' . $post->image);
             }
             $post->delete();
             return response()->json(['message' => 'Post deleted successfully'], 200);
         }
-        return response()->json(['message' => 'Unauthorized'], 403);
+        return response()->json(['message' => 'Permission Denied'], 403);
     }
 }

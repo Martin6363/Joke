@@ -35,7 +35,10 @@ class SearchPostController extends Controller
     
     public function searchPosts (Request $request) {
         $search = $request->search;
-        // $request->session()->put('search', $search);
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+        
         if ($search != "") {
             $posts = Post::where('published', 1)
                     ->where('title', 'like', "%$search%")->get();

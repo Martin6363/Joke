@@ -51,9 +51,9 @@
                         @endforeach
     
                         @else
-                        <div class="flex items-center justify-center my-10 min-h-100">
-                            <a href="{{ route("post.create") }}">Create Post</a>
-                        </div>
+                            <div class="flex items-center justify-center my-10 min-h-100">
+                                <a wire:navigate href="{{ route("post.create") }}">Create Post</a>
+                            </div>
                     @endif
                 </div>
             </div>

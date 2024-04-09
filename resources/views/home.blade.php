@@ -6,15 +6,15 @@
                     <div class="create_post">
                         <div class="card text-center bg-slate-300">
                             <div class="card-header">
-                                <a href="{{ route('profile.view', [Auth::user()->id]) }}" class="flex items-center gap-2 {{ $theme == 'dark' ? 'text-gray-900' : 'text-gray-800' }}">
+                                <a href="{{ route('profile.view', [Auth::user()->id]) }}" wire:navigate class="flex items-center gap-2 {{ $theme == 'dark' ? 'text-gray-900' : 'text-gray-800' }}">
                                     <img src="{{ Storage::url('avatar/' . Auth::user()->avatar) }}" class="card-img-top user_logo_post" alt="">
                                     <span>{{ Auth::user()->name }}</span>
                                 </a>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title"><b>Create Your Post</b></h5>
-                                <a href="{{ route('post.create') }}" class="btn bg-slate-400 w-full">Create <i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="{{ route('post.index') }}" class="btn bg-transparent w-full mt-1">Unpublished Posts <i class="fa-solid fa-eye"></i></a>
+                                <a href="{{ route('post.create') }}" wire:navigate class="btn bg-slate-400 w-full">Create <i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route('post.index') }}" wire:navigate class="btn bg-transparent w-full mt-1">Unpublished Posts <i class="fa-solid fa-eye"></i></a>
                             </div>
                         </div>
                     </div>
@@ -27,12 +27,13 @@
                                 </button>
                               </h2>
                               <div id="flush-collapseOne" class="accordion-collapse visible collapse {{ $theme == "dark" ? "bg-gray-900 text-gray-300 border-gray-700 focus:border-indigo-600 focus:ring-indigo-600" : "border-gray-300 bg-gray-200 text-gray-700 focus:ring-indigo-500 focus:border-indigo-500"}}" style="border-radius: 5px" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                    @foreach ($categories as $category)
-                                        <a href="{{ route('post.create') }}" class="accordion-body btn w-full text-left flex justify-between {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400 p-2">
-                                            {{ $category->name }}
-                                            <small class="">{{ $category->posts_count }}</small>
-                                        </a>
-                                    @endforeach
+                                @foreach ($categories as $category)
+                                    <a wire:navigate href="{{ route('category.filter', ['category' => $category->name]) }}" class="accordion-body btn w-full text-left flex justify-between {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400 p-2">
+                                        {{ $category->name }}
+                                        <small class="">{{ $category->posts_count }}</small>
+                                        <input name="category_id" type="hidden" value="{{ $category->id }}">
+                                    </a>
+                                @endforeach
                               </div>
                             </div>
                         </div>
@@ -52,7 +53,7 @@
                 <aside class="{{ $theme == 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-light text-gray-800'}} main_right_aside" id="aside">
                     <h2 class="text-center mb-3" style="font-family: Poppins, sans-serif">Active Users</h2>
                     @foreach ($activeUsers as $key => $user)
-                        <a href="{{ route('profile.view', [$user->id]) }}" class="{{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-800'}}">
+                        <a href="{{ route('profile.view', [$user->id]) }}" wire:navigate class="{{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-800'}}">
                             <div class="card mb-2 {{ $theme == 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}}">
                                 <div class="card-body flex items-center gap-2">
                                     <img src="{{ Storage::url('avatar/' . $user->avatar) }}" class="card-img-top user_logo_post" alt="">
@@ -73,13 +74,14 @@
             </div>
         </div>
     </div>
+    </div>
     <script>
         var ENDPOINT = "{{ route('home') }}";
         var page = 1;
         var loading = false;
         
         $(document).ready(function() {
-            page++
+            page++;
             loadMore(page);
         });
     
@@ -112,10 +114,9 @@
                     console.log(xhr.status);
                     console.log(thrownError);
                 }
-            })
+            });
         }
-    </script>
-    </div>
+    </script>    
 </body>
 </html>
 

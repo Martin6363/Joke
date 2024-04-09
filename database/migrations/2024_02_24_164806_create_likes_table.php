@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('user_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('post_id')->constrained()->cascadeOnDelete();
             $table->boolean('is_like')->default(true);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 class HomeController extends Controller
 {
     public function index (Request $request) {
         $usersWithPosts = User::with(['posts' => function ($query) {
             $query->where('published', 1);
-        }])->orderBy('id', 'desc')->paginate(2);
+        }])->orderBy('id', 'desc')->paginate(3);
 
         $activeUsers = User::whereHas('posts', function ($query) {
             $query->where('published', 1);

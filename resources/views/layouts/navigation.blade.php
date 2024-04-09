@@ -6,18 +6,21 @@ box-shadow: 0px 4px 8px -1px #000000;">
             <div class="flex items-center">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('home') }}" wire:navigate>
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 {{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-700'}}" />
                     </a>
                 </div>
                 <x-search-bar></x-search-bar>
-
             </div>
             <!-- Navigation Links -->
             <div class="nav-link" style="width: 45%;">
                 <div class="hidden space-x-8 sm:flex items-center h-100">
                     <ul class="flex h-100 gap-5 items-end w-full" style="justify-content: space-around">
-                        <li class="w-full" style="border-bottom: 4px solid blue;"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-house" style="font-size: 25px"></i></a></li>
+                        <li class="w-full" style="border-bottom: 4px solid blue;">
+                            <a href="{{route('home')}}" wire:navigate class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400">
+                                <i class="fa-solid fa-house" style="font-size: 25px"></i>
+                            </a>
+                        </li>
                         <li class="w-full"><a href="{{route('home')}}" class="{{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-700' }} hover:bg-gray-400"><i class="fa-solid fa-user-group"></i></a></li>
                     </ul>
                 </div>
@@ -42,7 +45,7 @@ box-shadow: 0px 4px 8px -1px #000000;">
                     
 
                     <x-slot name="content" class="{{ $theme == 'dark' ? 'bg-gray-800' : 'bg-gray-100'}}">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.edit')" wire:navigate>
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         <form action="{{ route('create-update') }}" method="POST" class="mode_box">
@@ -57,7 +60,7 @@ box-shadow: 0px 4px 8px -1px #000000;">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('logout')"
+                            <x-dropdown-link :href="route('logout')" wire:navigate
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}

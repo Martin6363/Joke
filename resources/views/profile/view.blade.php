@@ -14,7 +14,7 @@
                     <h5 class="card-title text-center my-3 font-bold" style="font-size: 25px; color: white; z-index: 1; position: relative;">
                         {{ $user->name }}
                         @if (Auth::user()->id == $user->id)
-                            <a href="{{ route('profile.update') }}" class="text-gray-200 ml-3 p-2 rounded" style="background: rgb(255,255,255,0.3)"><i class="fa-solid fa-pencil"></i></a>
+                            <a wire:navigate href="{{ route('profile.update') }}" class="text-gray-200 ml-3 p-2 rounded" style="background: rgb(255,255,255,0.3)"><i class="fa-solid fa-pencil"></i></a>
                         @endif
                     </h5>
                     <div class="card-body user-info" style="z-index: 1; position: relative; color: white;">
@@ -28,12 +28,18 @@
                                 <small class="text-lead">Posts</small>
                             </p>
                             <p class="user_result_text">
-                                <span class="stat-number" style="font-family: Poppins, sans-serif;">1500</span>
+                                <span class="stat-number" style="font-family: Poppins, sans-serif;">
+                                    {{ $totalLikes }}
+                                </span>
                                 <small class="text-lead">Likes</small>
                             </p>
                         </div>
-                        @if (Auth::user()->id !== $user->id)                        
-                            <button class="btn btn-primary w-20 mx-auto" id="btn-ripple" style="position: relative; z-index: 1;">Follow</button>
+                        @if (Auth::user()->id !== $user->id)  
+                            <div class="box-3">
+                                <button class="btn btn-three">
+                                    <span><i class="fa-solid fa-user-plus"></i> Follow</span>
+                                </button>
+                            </div>                      
                         @endif
                     </div>
                 </div>                
@@ -44,8 +50,8 @@
                         <div class="card text-center {{ $theme == 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-800'}}">
                             <div class="card-body">
                                 <h5 class="card-title"><b>Create Your Post</b></h5>
-                                <a href="{{ route('post.create') }}" class="btn w-full {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-800'}}">Create <i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="{{ route('post.index') }}" class="btn bg-transparent w-full mt-1 {{ $theme == 'dark' ? 'text-gray-300' : 'text-gray-800'}}">Unpublished Posts <i class="fa-solid fa-eye"></i></a>
+                                <a wire:navigate href="{{ route('post.create') }}" class="btn w-full {{ $theme == 'dark' ? 'text-gray-100' : 'text-gray-800'}}">Create <i class="fa-solid fa-pen-to-square"></i></a>
+                                <a wire:navigate href="{{ route('post.index') }}" class="btn bg-transparent w-full mt-1 {{ $theme == 'dark' ? 'text-gray-300' : 'text-gray-800'}}">Unpublished Posts <i class="fa-solid fa-eye"></i></a>
                             </div>
                         </div>
                     </div>
@@ -71,7 +77,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Display user avatar inside the modal body -->
                 <img src="{{ Storage::url('avatar/' . $user->avatar) }}" class="card-img-top w-full h-full" alt="User Avatar">
             </div>
         </div>
@@ -91,41 +96,41 @@
         //         }
         //     });
         // });
-        gsap.config({trialWarn: false});
+        document.addEventListener('DOMContentLoaded', function() {
+            const childSplit = new SplitText(".user_result_text", {
+                type: "lines",
+                linesClass: "split-child"
+            });
+            
+            const parentSplit = new SplitText(".user_result_text", {
+                type: "lines",
+                linesClass: "split-parent"
+            });
 
-        const childSplit = new SplitText(".user_result_text", {
-            type: "lines",
-            linesClass: "split-child"
-        });
-        
-        const parentSplit = new SplitText(".user_result_text", {
-            type: "lines",
-            linesClass: "split-parent"
-        });
+            gsap.from(childSplit.lines, {
+                duration: 1.5,
+                yPercent: 100,
+                ease: "power4",
+                stagger: 0.1
+            });
 
-        gsap.from(childSplit.lines, {
-            duration: 1.5,
-            yPercent: 100,
-            ease: "power4",
-            stagger: 0.1
+            $(document).find('#btn-ripple').on('click', function(e) {
+                gsap.fromTo('.ripples', {
+                    border: '1px solid #fff',
+                    left: e.offsetX,
+                    top: e.offsetY,
+                    height: 0,
+                    width: 0,
+                    opacity: 1,
+                }, {
+                    border: '0px solid #fff',
+                    height: 60,
+                    width: 60,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                })
+            });
         });
-
-        document.getElementById('btn-ripple').addEventListener('click', function(e) {
-            gsap.fromTo('.ripples', {
-                border: '1px solid #fff',
-                left: e.offsetX,
-                top: e.offsetY,
-                height: 0,
-                width: 0,
-                opacity: 1,
-            }, {
-                border: '0px solid #fff',
-                height: 60,
-                width: 60,
-                opacity: 0,
-                duration: 1,
-                ease: "power2.out"
-            })
-        })
     </script>
 </x-app-layout>

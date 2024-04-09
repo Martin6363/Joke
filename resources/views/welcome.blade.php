@@ -24,12 +24,12 @@
             @if (Route::has('login'))
                 <div class="w-full hidden fixed top-0 right-0 px-6 py-4 sm:block login_box">
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-200 underline">Home</a>
+                        <a href="{{ url('/home') }}" wire:navigate class="text-sm text-gray-700 dark:text-gray-200 underline">Home</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-200">Log in</a>
+                        <a href="{{ route('login') }}" wire:navigate class="text-sm text-gray-700 dark:text-gray-200">Log in</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-200">Register</a>
+                            <a href="{{ route('register') }}" wire:navigate class="ml-4 text-sm text-gray-700 dark:text-gray-200">Register</a>
                         @endif
                     @endauth
                 </div>
