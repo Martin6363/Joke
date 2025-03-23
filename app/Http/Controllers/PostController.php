@@ -21,10 +21,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $userId = Auth::id();
+        $userId = Auth::user()->id;
 
         $posts = Post::with('category')
-        ->where('user_id', $userId)->where('published', 0)->orderBy('id', 'desc')->get();
+        ->where('user_id', $userId)
+        ->where('published', 0)
+        ->orderBy('id', 'desc')
+        ->get();
+        
         return view('post.index', compact('posts'));
     }
     

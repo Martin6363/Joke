@@ -28,6 +28,7 @@ body {
     overflow-x: hidden !important;
 }
 
+
 .user_post_data_block {
     display: flex !important;
     align-items: center !important;
@@ -40,6 +41,7 @@ body {
     min-width: 50px !important;
     height: 50px !important;
     border-radius: 50%;
+    vertical-align: middle;
 }
 
 .post_user_data_box {
@@ -313,23 +315,45 @@ body {
   }
   
   .main_right_aside {
-      right: 0;
-      width: 20%; 
+    right: -200px;
+    width: 300px !important;
+    overflow-x: hidden;
+    padding: 1.5rem;
+    transition: 0.3s ease;
+  }
+
+  .users_item_box {
+    border: none !important;
+  }
+
+  .users_item_box:hover {
+    border: 1px solid gray !important;
+  }
+
+  .main_right_aside small {
+    opacity: 0;
+    transition: 0.3s ease;
+  }
+
+  .main_right_aside:hover small {
+    opacity: 1;
+  }
+
+  .main_right_aside:hover {
+    right: 0%;
+    padding: 1.5rem;
   }
 
   .main_right_aside::-webkit-scrollbar {
     width: 6px;
-  }
-  
+  }  
   .main_right_aside::-webkit-scrollbar-track {
     border-radius: 10px;
   }
-   
   .main_right_aside::-webkit-scrollbar-thumb {
     background: #818181; 
     border-radius: 10px;
   }
-  
   .main_right_aside::-webkit-scrollbar-thumb:hover {
     background: #a6a6a6; 
   }
@@ -341,6 +365,7 @@ body {
   }
 
 
+  /* Comment Component */
   .comments_user {
     max-height: 300px !important;
     overflow-y: auto;
@@ -367,6 +392,14 @@ body {
   background-color: #2d9da9;
 }
   
+
+.comentor_avatar {
+  width: 45px !important;
+  height: 45px !important;
+  max-width: none !important;
+  border-radius: 50%;
+}
+
 .comment_content_box {
   width: 100%;
   display: flex;
@@ -377,8 +410,10 @@ body {
 }
 
 .comment_content_box .comment_avatar {
-  width: 50px;
-  height: 50px;
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: cover;
+
 }
 
 .comment_content_box textarea {
@@ -400,7 +435,39 @@ body {
   transform: translateY(-50%);
   background-color: rgb(45, 45, 185);
   color: #f2f2f2;
+}
 
+.comment_action {
+  opacity: 0;
+}
+
+.comment_box:hover .comment_action {
+  opacity: 1;
+}
+
+.reply-section textarea {
+  width: calc(100% - 50px);
+  min-height: 50px; 
+  resize: vertical;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.reply-section button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100% !important;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer; 
+  transition: background-color 0.3s;
+}
+
+.reply-section button:hover {
+  background-color: #2d3748;
 }
 
 
@@ -729,8 +796,17 @@ body {
 }
 
 .scrollable {
-  height: max-content;
+  height: 250px !important;
   overflow-y: auto;
+}
+
+.search_box {
+  position: relative;
+  transition: 0.3s ease-in-out;
+}
+
+#search_btn {
+  position: absolute;
 }
 
 .searched_list li {
@@ -749,4 +825,21 @@ body {
   align-items: center;
   gap: 5px;
   padding: 5px 3px;
+}
+
+#search {
+  padding-left: 35px;
+  transition: 0.2s ease-in-out;
+}
+
+#search:focus {
+  width: 400px;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }

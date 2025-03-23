@@ -7,7 +7,7 @@
                 </a>
                 <div class="d-flex post_user_data_box">
                     <a href="{{ route('profile.view', [$user->id]) }}" wire:navigate class="{{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-800'}}" style="text-decoration: underline;"><strong>{{ $user->name }}</strong></a>
-                    <small style="color: #949494"><b>{{ $post->created_at }}</b></small>
+                    <small style="color: #949494"><b>{{ $post->created_at->diffForHumans() }}</b></small>
                 </div>
             </div>
             <div class="setting_post">
@@ -21,7 +21,7 @@
                                 href="{{route('post.edit', $post->id)}}">
                                 Edit <i class="fa-solid fa-pen"></i>
                             </a>
-                            <button type="button" class="w-full flex justify-between {{ $theme == 'dark' ? 'text-gray-800 hover:bg-gray-500 focus:bg-gray-800' : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100' }} px-4 py-2 text-left text-sm leading-5 focus:outline-none transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="w-full flex justify-between {{ $theme == 'dark' ? 'text-gray-800 hover:bg-gray-500 focus:bg-gray-800' : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100' }} px-4 py-2 text-left text-sm leading-5 focus:outline-none transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $post->id }}">
                                 Delete <i class="fa-solid fa-trash"></i>
                             </button>
                         @else
@@ -55,19 +55,19 @@
                     <div class="flex items-center w-full justify-between gap-1 float-end">
                         <livewire:like-post :key="'likes' . $post->id" :post="$post" />
                         <div class="flex items-center">
-                            <i class="fa-solid fa-share"></i> <small>Share</small>
                             <button class="btn {{ $theme == 'dark' ? 'text-gray-200' : 'text-gray-800'}}" type="button" data-bs-toggle="collapse" tabindex="{{ $post->id }}" data-bs-target="#collapseExample{{ $post->id }}" aria-expanded="false" aria-controls="collapseExample{{ $post->id }}">
                                 <i class="fa-regular fa-comment"></i> Comments
                             </button>
+                            <i class="fa-solid fa-share"></i> <small>Share</small>
                         </div>
                     </div>
-                    <livewire:post-comments :key="'comments' . $post->id" :$post/> 
+                    <livewire:post-comments :key="'comments-' . $post->id" :post="$post"/> 
                 </div>
             </div>
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal{{ $post->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content {{ $theme == 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-100 text-gray-800' }}">
                     <div class="modal-header">

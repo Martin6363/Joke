@@ -19,11 +19,10 @@ class FollowFactory extends Factory
     public function definition()
     {
         $userId = User::inRandomOrder()->first();
-        $postId = Post::inRandomOrder()->first();
 
         return [
             "user_id"=> $userId->id,
-            "post_id"=> $postId->id,
+            "follower_id"=> $userId->id,
         ];
     }
 }

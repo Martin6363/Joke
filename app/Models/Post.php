@@ -22,8 +22,8 @@ class Post extends Model
         'published'
     ];
 
-    public function category(): BelongsToMany {
-        return  $this->belongsToMany(Category::class);
+    public function category(): BelongsTo {
+        return  $this->belongsTo(Category::class);
     }
 
     public function user(): BelongsTo {

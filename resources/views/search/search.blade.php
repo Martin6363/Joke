@@ -5,9 +5,15 @@
                 <span class="text-gray-500">Searched results: </span>
                 <b>{{$search ? $search : ''}}</b>
             </h2>
-            @foreach ($posts as $post) 
-                <x-user-and-post-section :user="$post->user" :post="$post" :theme="$theme" />
-            @endforeach
+            
+            @if(count($posts) > 0)
+                @foreach ($posts as $post) 
+                    <x-user-and-post-section :user="$post->user" :post="$post" :theme="$theme" />
+                @endforeach
+
+                @else
+                <span>No Searched Results</span>
+            @endIf
         </div>
     </div>
 </x-app-layout>

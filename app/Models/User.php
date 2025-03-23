@@ -52,6 +52,14 @@ class User extends Authenticatable //implements MustVerifyEmail
         return $this->likes()->where('post_id', $post->id)->exists();
     }
 
+    public function follows (): BelongsToMany {
+        return $this->belongsToMany(User::class,'follows','follower_id', 'user_id')->withTimestamps();
+    }
+
+    public function hasFollowed(User $user) {
+        return $this->follows()->where('user_id', $user->id)->exists();
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

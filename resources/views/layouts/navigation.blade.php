@@ -45,17 +45,20 @@ box-shadow: 0px 4px 8px -1px #000000;">
                     
 
                     <x-slot name="content" class="{{ $theme == 'dark' ? 'bg-gray-800' : 'bg-gray-100'}}">
-                        <x-dropdown-link :href="route('profile.edit')" wire:navigate>
-                            {{ __('Profile') }}
+                        <x-dropdown-link :href="route('profile')">
+                            <i class="fa-solid fa-user"></i> {{ __('Profile') }}
                         </x-dropdown-link>
                         <form action="{{ route('create-update') }}" method="POST" class="mode_box">
                             @csrf
                             <input type="radio" name="theme" id="theme" value="{{ $theme == 'dark' ? 'light' : 'dark' }}" class="btn-check" onchange="this.form.submit()">
                             <label for="theme" class="block w-full px-4 py-2 text-left text-sm leading-5 focus:outline-none transition duration-150 ease-in-out {{ $theme == 'dark' ? 'text-gray-800 hover:bg-gray-500 focus:bg-gray-800' : 'text-gray-700 hover:bg-gray-100 focus:bg-gray-100' }} cursor-pointer">
-                                <i class="fa-solid {{ $theme == 'dark' ? 'fa-moon' : 'fa-sun' }}"></i>
-                                <span>{{ $theme == 'dark' ? 'Dark theme' : 'Light theme' }}</span>
+                                <i class="fa-solid {{ $theme == 'dark' ? 'fa-sun' : 'fa-moon' }}"></i>
+                                <span>{{ $theme == 'dark' ? 'Light theme' : 'Dark theme' }}</span>
                             </label>
                         </form>
+                        <x-dropdown-link :href="route('profile.edit')">
+                            <i class="fa-solid fa-gear"></i> {{ __('Settings') }}
+                        </x-dropdown-link>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -63,7 +66,7 @@ box-shadow: 0px 4px 8px -1px #000000;">
                             <x-dropdown-link :href="route('logout')" wire:navigate
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>

@@ -10,8 +10,8 @@ class HomeController extends Controller
     public function index (Request $request) {
         $usersWithPosts = User::with(['posts' => function ($query) {
             $query->where('published', 1);
-        }])->orderBy('id', 'desc')->paginate(3);
-
+        }])->orderBy('id', 'desc')->paginate(5);
+        
         $activeUsers = User::whereHas('posts', function ($query) {
             $query->where('published', 1);
         })->orderBy('id', 'desc')->get();
@@ -40,7 +40,7 @@ class HomeController extends Controller
 
     
     // Theme Mode
-    public function createAndUpdate (Request $request) {
+    public function ThemeUpdate (Request $request) {
         $theme = $request->input('theme');
 
         if($theme && in_array($theme, ['light', 'dark'])) {

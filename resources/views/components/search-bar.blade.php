@@ -1,6 +1,6 @@
 <form action="{{ route('search.posts') }}" id="search_form" method="GET">
-    <div class="p-1 w-full rounded rounded-pill shadow-sm position-relative {{ $theme == 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-300 text-gray-800' }}">
-        <div class="input-group">
+    <div class="search_container p-1 w-full rounded rounded-pill shadow-sm position-relative {{ $theme == 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-gray-300 text-gray-800' }}">
+        <div class="search_box">
             <div class="input-group-prepend">
                 <button type="submit" class="btn btn-link text-warning" id="search_btn">
                     <i class="fa fa-search"></i>
@@ -56,7 +56,7 @@
                             console.error(xhr.responseText);
                         }
                     });
-                }, 500);
+                }, 300);
             }
         });
 
@@ -84,11 +84,6 @@
             }
         });
     });
-
-        // $('#search').blur(function(){
-        //     // $('#list-search').empty();
-        //     $('#list-search').hide();
-        // });
 
 
         $('#search_btn').on('click', function (e) {

@@ -14,8 +14,12 @@ class ViewProfileController extends Controller
         }])->find($view_id);
         
         $totalLikes = 0;
-        foreach($user->posts as $post) {
-            $totalLikes += $post->likes_count;
+        if ($user->posts) {
+            foreach($user->posts as $post) {
+                $totalLikes += $post->likes_count;
+            }
+        } else {
+            return abort(404);
         }
 
         if (!$user) {

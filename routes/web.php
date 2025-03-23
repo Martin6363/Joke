@@ -17,7 +17,7 @@ Route::get('/', function () {
 Route::match(['get', 'post'], '/home', [HomeController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('home');
-Route::post('/cookie/create/update', [HomeController::class, 'createAndUpdate'])->name('create-update');
+Route::post('/cookie/create/update', [HomeController::class, 'ThemeUpdate'])->name('create-update');
 
 
 Route::middleware('auth')->group(function () {
@@ -34,10 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::post('posts/{post}/like', [PostLikeController::class, 'like'])->name('post.like');
     Route::delete('posts/{post}/unlike', [PostLikeController::class, 'unlike'])->name('post.unlike');
     ## Profile Routes
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile', [ProfileController::class, 'updateAvatar'])->name('profile.update.avatar');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class,'index'])->name('profile');
+    Route::get('/profile/settings', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/settings', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/settings', [ProfileController::class, 'updateAvatar'])->name('profile.update.avatar');
+    Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('profile/view/{id}', [ViewProfileController::class, 'index'])->name('profile.view');
 });
 

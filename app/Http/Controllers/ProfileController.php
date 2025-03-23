@@ -18,6 +18,31 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
 
+    public function index() {
+        $userId = Auth::user()->id;
+
+        $authUserWithPosts = User::withCount('posts')->with(['posts' => function($query) {
+            $query->withCount('likes');
+        }])->find($userId);
+        
+        $totalLikes = 0;
+        if ($authUserWithPosts->posts) {
+            foreach($authUserWithPosts->posts as $post) {
+                $totalLikes += $post->likes_count;
+            }
+        } else {
+            return abort(404);
+        }
+
+        if (!$authUserWithPosts) {
+            return abort(404);
+        }
+        return view('profile.index', compact([
+            'authUserWithPosts',
+            'totalLikes'
+        ]));
+    }
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -74,9 +99,6 @@ class ProfileController extends Controller
     }
     
     
-    
-
-
     /**
      * Delete the user's account.
      */

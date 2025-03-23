@@ -6,7 +6,6 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Mockery\Matcher\Type;
 
 class SearchPostController extends Controller
 {
@@ -14,7 +13,7 @@ class SearchPostController extends Controller
     {
         $searchData = $request->data;
         $posts = Post::where('published', 1)
-                     ->where('title', 'like', "%$searchData%")
+                     ->where('title', 'like', "%$searchData%")->skip(0)->take(7)
                      ->get(['id', 'title']);
 
         if ($request->ajax()) {
@@ -26,7 +25,7 @@ class SearchPostController extends Controller
 
     public function searchResult($name) {
         $search = $name;
-        $posts =  Post::with('user')->where('title', $name)->get();
+        $posts =  Post::with('user')->where('title', 'like', "%$name%")->get();
         
         $posts->pluck('user')->unique()->filter();
 
